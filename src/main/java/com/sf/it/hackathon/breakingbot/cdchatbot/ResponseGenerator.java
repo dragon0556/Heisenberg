@@ -13,15 +13,13 @@ import com.sf.it.hackathon.breakingbot.textmatching.TfIdfMain;
 
 public class ResponseGenerator {
 	
-	public String inputCategory;
 	JSONObject knowledge;
 	
-	public void setInputCategory(String inputCategory){
+	public void setInputCategory(String intent){
 		String knowledgeFileName = null;
-		this.inputCategory = inputCategory;
+		String changedIntent = intent.trim().replace(" ", "_").toLowerCase().toLowerCase();
 		
-		if(inputCategory == "jenkins")
-			knowledgeFileName = "JenkinsInfraKnowledge.json";
+			knowledgeFileName = changedIntent + "_InfraKnowledge.json";
         // TBD: implement other categories too		
 		
 		try {

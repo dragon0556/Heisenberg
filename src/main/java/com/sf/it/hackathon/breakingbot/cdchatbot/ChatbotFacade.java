@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.sf.it.hackathon.breakingbot.knowledge.KnowledgeBuilder;
 import com.sf.it.hackathon.breakingbot.knowledge.PreprocessingUtil;
@@ -28,7 +29,7 @@ public class ChatbotFacade {
 			preProc = InputPreprocessor.getPreprocessor();
 			configurePreprocessor();
 			sInput = input;
-			result = preprocess_input();
+			result = preprocess_input(intent);
 				//respond();
 		}
 		catch(Exception e) {
@@ -45,7 +46,7 @@ public class ChatbotFacade {
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		sInput = in.readLine();
-		preprocess_input();
+		//preprocess_input();
 	}
 	
 	public boolean quit(){
@@ -62,7 +63,7 @@ public class ChatbotFacade {
 		preProc.setposTaggerModel("en-pos-maxent.bin");
 	}
 	
-	private String preprocess_input(){
+	private String preprocess_input(String intent){
 		
 		String[] sentenses = preProc.extractSentenses(sInput);
 		
@@ -81,11 +82,11 @@ public class ChatbotFacade {
 		
 		
 		
-		String category = InputPreprocessor.detectCategory(sInput);
+		//String category = InputPreprocessor.detectCategory(sInput);
 		
 		
-		if (category != null){
-			responseGen.setInputCategory("jenkins");
+		if (!StringUtils.isEmpty(intent)){
+			responseGen.setInputCategory(intent);
 		}
 		else{ // TBD: Chatbot is rude. Make him decent.
 			System.out.println("I dont know man what the hell you are talking about. I can only help you with CD team stuff.");
